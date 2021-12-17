@@ -1,0 +1,33 @@
+
+:root{
+    --primary-text-color:#2A2A2A;
+    --primary-bg-color:#FFFFFF;
+    --secondary-text-color:#808080;
+    --button-next-color:#F67599;
+    --button-pre-color:#000000;
+    --step-active-color:#2a2a2a;
+    --line-color:#F0F0F5;
+    --bascket-bg-color:#FFFFFF;
+    --bascket-button-color:#F0F0F5;
+    --step-mute-color:#afb1bd;
+    --input-text-color:#999999;
+    --input-border-color:#4a4a4a;
+    --footer-bg-color:#F6F7F8;
+
+}
+
+[data-theme=dark]{
+    --primary-text-color:#FFFFFF;
+    --primary-bg-color:rgba(255,255,255,0.6);
+    --secondary-text-color:#808080;
+    --button-next-color:#F67599;
+    --button-pre-color:#ffffff;
+    --step-active-color:#FFFFFF;
+    --line-color:#F0F0F5;
+    --bascket-bg-color:#3838383;
+    --bascket-button-color:#808080;
+    --step-mute-color:rgba(255,255,255,0.4);
+    --input-text-color:rgba(255,255,255,0.3);
+    --input-border-color:#5e5e5e;
+    --footer-bg-color:#333333;
+}
