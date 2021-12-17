@@ -79,7 +79,7 @@ header {
     margin-top: 2rem;
     transform: scale(1,0);
     transform-origin: top;
-    transition:all .5s ease-in ;
+    transition:transform .5s ease-in ;
   }
   .nav-bar{
       display: flex;
@@ -90,11 +90,7 @@ header {
       opacity: 0;
       transition: opacity .1s ease-in ;
   }
-  .search img{
-    
-    
-  }
-  
+ 
   .icon-wrapper {
     grid-area: icon;
     margin-top:-1.5rem;
@@ -102,21 +98,31 @@ header {
     align-items: center;
     justify-content: space-evenly;
     opacity: 0;
-    transition: opacity .2s ease-in;
+    transition: opacity .1s ease-in;
 
-  }
+    .sarch path,
+    .cart path{
+        fill: var(--primary-text-color);
+    }
+    .moon path{
+        stroke:var(--primary-text-color) ;
+    }
+}
+    .hambuger-toggle:checked ~nav .nav-bar{
+    opacity: 1;
+    transition: opacity .5s ease-in .5s;
+    
+    }
   .hambuger-toggle:checked ~ .icon-wrapper{
     opacity: 1;
+    transition: opacity .5s ease-in .5s ;
   }
   .hambuger-toggle:checked ~ nav{
-      display: inherit;
+      display: block;
       transform: scale(1,1);
   }
-  .hambuger-toggle:checked ~nav .nav-bar{
-      opacity: 1;
-    
-  }
 }
+
 @media (min-width:375px){
     header{
         width:77%;
@@ -150,6 +156,7 @@ header {
 
         nav{
             transform: unset;
+            transition: unset;
             margin:0;
             height: 100%;
         }
