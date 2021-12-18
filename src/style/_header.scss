@@ -1,6 +1,10 @@
 body {
   width: 100%;
+  &::-webkit-scrollbar{
+  width: 0;
+  }
 }
+
 header {
   position: fixed;
   z-index: 9999;
@@ -54,6 +58,9 @@ header {
     width: 70%;
     justify-content: space-evenly;
     opacity: 0;
+    z-index:20;
+    margin-top:-2rem;
+    cursor: pointer;
     transition: opacity 0.1s ease-in-out;
     .serach path,
     .cart path {
@@ -130,6 +137,7 @@ header {
       }
       .icon-wrapper {
         grid-area: icon;
+        margin: 0;
         width: 100%;
         opacity: 1;
         display: flex;

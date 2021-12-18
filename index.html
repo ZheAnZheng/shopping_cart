@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head >
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Ac Shopping</title>
@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <header>
+    <header > 
       <div class="container">
         <input id="hambuger" class="hambuger-toggle" type="checkbox" />
         <label for="hambuger" class="hambuger-box">
@@ -113,11 +113,92 @@
             </div>
           </div>
         </div>
-        <div class="checkout-section"></div>
+        <div class="checkout-section">
+          <div class="checkout active">
+            <h2>寄送地址</h2>
+            <form class="checkout-info">
+              <div class="form-group">
+                <label for="title"  >稱謂</label>
+                <div class="select-wrapper">
+                    <select name="title" id="title">
+                        <option value="sir">先生</option>
+                        <option value="miss">女士</option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label  for="name">姓名</label>
+                <input type="text"id="name" name="name" placeholder="請輸入姓名"/>
+              </div>
+              <div class="form-group">
+                <label name="phone" id="phone">電話</label>
+                <input type="number" for="phone" placeholder="請輸入行動電話" />
+              </div>
+              <div class="form-group">
+                <label for="email"  >Email</label>
+                <input name="email"  type="email" id="email" placeholder="請輸入電子郵件" />
+              </div>
+              <div class="form-group">
+                <label name="state" id="state" >縣市</label>
+                <div class="select-wrapper">
+                    <select id="state" required>
+                    <option value="" disabled>請選擇地點</option>
+                    <option value="New_Taipei">新北</option>
+                    <option value="Taipei">台北</option>
+                    <option value="Kaoushuong">高雄</option>
+                </select>
+                </div>
+                
+              </div>
+              <div class="form-group">
+                <label name="address" id="address">地址</label>
+                <input type="text" for="address" placeholder="請輸入地址"/>
+              </div>
+            </form>
+          </div>
+          <div class="checkout">
+            <h2>運送方式</h2>
+            <form>
+              <div class="form-group">
+                <input type="radio" />
+                <label>
+                  <div>標準</div>
+                </label>
+              </div>
+              <div class="form-group">
+                <input type="radio" />
+                <label>
+                  <div>DHL貨運</div>
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="checkout">
+            <h2>付款資訊</h2>
+            <form>
+              <div class="form-group">
+                <label name="owner" id="owner">持卡人姓名</label>
+                <input type="text" for="owner" />
+              </div>
+              <div class="form-group">
+                <label name="card-number" id="cardNumber">卡號</label>
+                <input type="text" for="cardNumber" />
+              </div>
+              <div class="form-group">
+                <label name="expire-number" id="expire">有效期限</label>
+                <input type="text" for="expire" />
+              </div>
+              <div class="form-group">
+                <label name="CCV" id="CCV">CVC/CCV</label>
+                <input type="text" for="CCV" />
+              </div>
+            </form>
+          </div>
+        </div>
         <p>something checkout</p>
       </section>
       <section class="shopping-basket">
-          <h1>basket</h1>
+        <h1>basket</h1>
       </section>
     </main>
   </body>

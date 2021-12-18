@@ -1,107 +1,245 @@
-@mixin getStep($num){
-    @for $i from 1 through $num{
-        &:nth-child(#{$i}) .step-circle::after{
-            content:"#{$i}";
-        }
+@mixin getStep($num) {
+  @for $i from 1 through $num {
+    &:nth-child(#{$i}) .step-circle::after {
+      content: "#{$i}";
     }
+  }
 }
-main{
-    display: flex;
-    flex-direction: column;
-    width: 92%;
-    margin:0 auto;
-    padding-top:60px ;
+%flex-center {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
 }
-.step-wrapper{
-    margin-top:24px ;
-    display: flex;
-    justify-content: space-between;
-    
-    .step-text{
-        display:none;
-    }
-    .step-circle{
-        position: relative;
-        display: block;
-        width: 32px;
-        height: 32px;
-        // border: 1px solid black;
-        border-radius:50%;
-        border:1px solid var(--step-mute-color);
-        color:var(--step-mute-color);
-        background-color: var(--step-mute-bg);
-        &::after{
-            position: absolute;
-            
-            top:2px;
-            left:50%;
-            transform:translateX(-50%);
-        }
-        
-    }
-    .step-item{
-        @include getStep(3);
-        flex:1;
-        position: relative;
-        &:nth-of-type(2){
-            display: flex;
-            justify-content: center;
-            .connect-line{
+main {
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  margin: 0 auto;
+  padding-top: 60px;
+}
 
-                left:calc(-87% + 30px);
-                right:calc(50% + 30px) ;
-            }
-        }
-        &:nth-of-type(3){
-            display: flex;
-            justify-content: flex-end;
-            .connect-line{
+.step-wrapper {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
 
-                left: calc(-50% + 30px );
-                right:calc(10% + 30px) ;
-            }
-        }
+  .step-text {
+    display: none;
+  }
+  .step-circle {
+    position: relative;
+    display: block;
+    width: 32px;
+    height: 32px;
+    // border: 1px solid black;
+    border-radius: 50%;
+    border: 1px solid var(--step-mute-color);
+    color: var(--step-mute-color);
+    background-color: var(--step-mute-bg);
+    &::after {
+      position: absolute;
+
+      top: 2px;
+      left: 50%;
+      transform: translateX(-50%);
     }
-    .connect-line{
+  }
+
+  .step-item {
+    @include getStep(3);
+    flex: 1;
+
+    position: relative;
+    &:nth-of-type(1) {
+      @extend %flex-center;
+    }
+    &:nth-of-type(2) {
+      @extend %flex-center;
+      justify-content: center;
+      .connect-line {
+        left: calc(-80% + 30px);
+        right: calc(50% + 30px);
+      }
+    }
+    &:nth-of-type(3) {
+      @extend %flex-center;
+      justify-content: flex-end;
+
+      .connect-line {
+        left: calc(-50% + 30px);
+        right: calc(15% + 30px);
+      }
+    }
+  }
+
+  .connect-line {
+    position: absolute;
+    // display: block;
+    height: 2px;
+    top: 16px;
+
+    background-color: var(--step-mute-color);
+  }
+}
+.checkout {
+  display: none;
+  h2 {
+    margin: 24px 0;
+  }
+}
+.active {
+  display: inherit;
+}
+
+input,
+select {
+  -webkit-appearance: none;
+}
+@mixin setGrid($col_1, $col_2, $row_1, $row_2) {
+  grid-column: #{$col_1} / #{$col_2};
+  grid-row: #{$row_1} / #{$row_2};
+}
+
+.checkout-info {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(5, 64px);
+  column-gap: 2rem;
+  row-gap: 20px;
+  .form-group {
+    .select-wrapper {
+      position: relative;
+      z-index: 0;
+      background-color: transparent;
+      &::after {
         position: absolute;
-        // display: block;
-        height:2px;
-        top: 16px;
-        
-        background-color: var(--step-mute-color);
+
+        z-index: -1;
+        right: 10px;
+        top: 45%;
+        bottom: 0;
+        content: "";
+        border-style: solid;
+        border-width: 6px 5px 5px 5px;
+        border-color: var(--secondary-text-color) transparent transparent
+          transparent;
+        //   transform:translateY(-25%);
+      }
     }
-    
+    input {
+      padding: 0 1rem;
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--secondary-text-color);
+      border-radius: 7px;
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+    }
+    select {
+      @extend input;
+      background-color: transparent;
+      &:invalid {
+        color: var(--secondary-text-color);
+      }
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--secondary-text-color);
+    }
+
+    &:nth-of-type(1) {
+      @include setGrid(1, 5, 1, 2);
+    }
+    &:nth-of-type(2) {
+      @include setGrid(5, 13, 1, 2);
+    }
+    &:nth-of-type(3) {
+      @include setGrid(1, 13, 2, 3);
+    }
+    &:nth-of-type(4) {
+      @include setGrid(1, 13, 3, 4);
+    }
+    &:nth-of-type(5) {
+      @include setGrid(1, 13, 4, 5);
+    }
+    &:nth-of-type(6) {
+      @include setGrid(1, 13, 5, 6);
+    }
+  }
 }
 
-
-
-@media (min-width:450px){
-    main{
-        width:80%;
-    }
-
+@media (min-width: 450px) {
+  main {
+    width: 80%;
+  }
 }
-@media (min-width:1000px){
-    main{
-        display: flex;
-        flex-flow:row nowrap;
-        justify-content: space-between;
-        padding-top:10%;
-        .checout-wrapper{
-            flex:  0 0 60%;
-            width: 100%;
+@mixin showStepText($num) {
+  .step-item {
+    @for $i from 1 through $num {
+      &:nth-child(#{$i}) .step-text {
+        display: block;
+      }
+    }
+  }
+}
+@media (min-width: 1000px) {
+  main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding-top: 10%;
+    .checout-wrapper {
+      flex: 0 0 60%;
+
+      width: 100%;
+    }
+    .shopping-bascket {
+      flex: 1 0 0;
+      width: 100%;
+    }
+    .step-text {
+      display: block;
+    }
+    @include showStepText(3);
+    .step-wrapper {
+      .step-item:nth-child(2) .connect-line {
+        left: calc(-45% + 30px);
+        right: calc(80% + 30px);
+      }
+      .step-item:nth-child(3) .connect-line {
+        left: calc(-30% + 30px);
+        right: calc(60% + 30px);
+      }
+    }
+  }
+  .checkout-wrapper {
+    flex: 0 0 50%;
+    width: 100%;
+  }
+  .shopping-bascket {
+    flex: 0 0 40%;
+    width: 100%;
+  }
+
+  .checkout-info {
+    grid-template-rows: repeat(3, 64px);
+    .form-group{
+        &:nth-of-type(3) {
+          @include setGrid(1, 7, 2, 3);
         }
-        .shopping-bascket{
-            flex:1 0 0;
-            width: 100%;
+        &:nth-of-type(4) {
+          @include setGrid(7, 13, 2, 3);
+        }
+        &:nth-of-type(5) {
+          @include setGrid(1, 5, 3, 4);
+        }
+        &:nth-of-type(6) {
+          @include setGrid(5, 13, 3, 4);
         }
     }
-    .checkout-wrapper{
-            flex:  0 0 50%;
-            width: 100%;
-        }
-    .shopping-bascket{
-            flex: 0 0 40% ;
-            width: 100%;
-    }  
+  }
 }
