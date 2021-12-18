@@ -137,7 +137,8 @@ header {
         justify-content: flex-end;
       }
       nav {
-        transform: unset;
+        transform: none;
+        transition: none;
         opacity: 1;
         grid-area: nav;
         width: 100%;
@@ -146,7 +147,6 @@ header {
           all: unset;
           display: flex;
           width: 100%;
-
           justify-content: flex-start;
           column-gap: 0.5rem;
           li {
@@ -176,9 +176,8 @@ header {
         overflow-x: unset;
 
         .nav-bar {
-          
           column-gap: 2rem;
-          li{
+          li {
             font-size: 18px;
           }
         }

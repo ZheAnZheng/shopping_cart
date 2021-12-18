@@ -1,12 +1,107 @@
+@mixin getStep($num){
+    @for $i from 1 through $num{
+        &:nth-child(#{$i}) .step-circle::after{
+            content:"#{$i}";
+        }
+    }
+}
 main{
     display: flex;
     flex-direction: column;
     width: 92%;
-    padding-top:100px ;
+    margin:0 auto;
+    padding-top:60px ;
+}
+.step-wrapper{
+    margin-top:24px ;
+    display: flex;
+    justify-content: space-between;
+    
+    .step-text{
+        display:none;
+    }
+    .step-circle{
+        position: relative;
+        display: block;
+        width: 32px;
+        height: 32px;
+        // border: 1px solid black;
+        border-radius:50%;
+        border:1px solid var(--step-mute-color);
+        color:var(--step-mute-color);
+        background-color: var(--step-mute-bg);
+        &::after{
+            position: absolute;
+            
+            top:2px;
+            left:50%;
+            transform:translateX(-50%);
+        }
+        
+    }
+    .step-item{
+        @include getStep(3);
+        flex:1;
+        position: relative;
+        &:nth-of-type(2){
+            display: flex;
+            justify-content: center;
+            .connect-line{
+
+                left:calc(-87% + 30px);
+                right:calc(50% + 30px) ;
+            }
+        }
+        &:nth-of-type(3){
+            display: flex;
+            justify-content: flex-end;
+            .connect-line{
+
+                left: calc(-50% + 30px );
+                right:calc(10% + 30px) ;
+            }
+        }
+    }
+    .connect-line{
+        position: absolute;
+        // display: block;
+        height:2px;
+        top: 16px;
+        
+        background-color: var(--step-mute-color);
+    }
+    
+}
+
+
+
+@media (min-width:450px){
+    main{
+        width:80%;
+    }
+
+}
+@media (min-width:1000px){
+    main{
+        display: flex;
+        flex-flow:row nowrap;
+        justify-content: space-between;
+        padding-top:10%;
+        .checout-wrapper{
+            flex:  0 0 60%;
+            width: 100%;
+        }
+        .shopping-bascket{
+            flex:1 0 0;
+            width: 100%;
+        }
+    }
     .checkout-wrapper{
-
-    }
+            flex:  0 0 50%;
+            width: 100%;
+        }
     .shopping-bascket{
-
-    }
+            flex: 0 0 40% ;
+            width: 100%;
+    }  
 }
