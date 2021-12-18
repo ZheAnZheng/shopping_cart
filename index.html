@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="checkout-section">
-          <div class="checkout active">
+          <div class="checkout ">
             <h2>寄送地址</h2>
             <form class="checkout-info">
               <div class="form-group">
@@ -156,19 +156,28 @@
               </div>
             </form>
           </div>
-          <div class="checkout">
+
+          <div class="checkout active">
             <h2>運送方式</h2>
-            <form>
+            <form class="checkout-deliver">
               <div class="form-group">
-                <input type="radio" />
-                <label>
-                  <div>標準</div>
+                <input name="deliver" type="radio" id="standard"/>
+                <label for="standard">
+                  <div class="checout_radio-text">
+                      <p>標準運送</p>
+                      <p>免費</p>
+                  </div>
+                  <p>約3~7個工作天</p>
                 </label>
               </div>
               <div class="form-group">
-                <input type="radio" />
-                <label>
-                  <div>DHL貨運</div>
+                <input name="deliver" type="radio" id="dhl"/>
+                <label for="dhl">
+                  <div class="checout_radio-text">
+                      <p>DHL貨運</p>
+                      <p>$500</p>
+                  </div>
+                  <p>48小時內送達</p>
                 </label>
               </div>
             </form>
