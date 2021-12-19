@@ -15,9 +15,10 @@ footer{
         flex: 1;
         align-self: center;
         max-width:180px ;
-        
-        object-fit: contain;
-        object-position: center;
+        path{
+            @include setLogoColor();
+        }
+            
     }
     .container{
         width:80%;
@@ -31,6 +32,9 @@ footer{
         padding-top:calc(284px / 4);
         display: flex;
         flex-direction: column;
+        h2{
+            color: var(--primary-text-color);
+        }
         a{
             color:var(--secondary-text-color);
         }
