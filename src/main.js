@@ -5,62 +5,91 @@ const nextButtons=document.querySelectorAll('.next-button');
 const prevButtons=document.querySelectorAll('.pre-button')
 const stepItems=[...document.querySelectorAll('.step-item')];
 const checkoutSections=[...document.querySelectorAll('.checkout')]
-console.log(prevButtons);
+
 
 let isDarkMode = false;
+//狀態模式
 const STEP_ONE=0;
 const STEP_TWO = 1;
 const STEP_THREE = 2;
 let current=STEP_ONE;
 
 function moveForward(){
+    let stepClassList=stepItems[current].classList;
+
     if(current===STEP_ONE){
-        //將當前step切換成勾勾
-        
-        // console.log(stepItems[current]);
-        stepItems[current].classList.remove("active");
-        //將當前step加上done
-        stepItems[current].classList.add("done");
-        //將下一個step加上active
+        stepClassList.remove("active");
+        stepClassList.add("done");
         checkoutSections[current].classList.remove('active');
-        //將checkout active換到下一個
         current=STEP_TWO;
+        stepClassList = stepItems[current].classList;
         checkoutSections[current].classList.add('active')
-        stepItems[current].classList.add("active");
+        stepClassList.add("active");
 
     }else if (current === STEP_TWO) {
-      stepItems[current].classList.remove("active");
-      //將當前step加上done
-      stepItems[current].classList.add("done");
+      stepClassList.remove("active");
+      stepClassList.add("done");
       checkoutSections[current].classList.remove("active");
-      //將下一個step加上active
       current = STEP_THREE;
-      stepItems[current].classList.add("active");
+      stepClassList = stepItems[current].classList;
+      stepClassList.add("active");
       checkoutSections[current].classList.add("active");
     } else if (current === STEP_THREE) {
         return
     }
 }
 function goBack(){
+    let stepClassList = stepItems[current].classList;
+
     if (current === STEP_ONE) {
         return;
     } else if (current === STEP_TWO) {
-        stepItems[current].classList.remove("active");
+        stepClassList.remove("active");
         checkoutSections[current].classList.remove('active')
         current=STEP_ONE
-        stepItems[current].classList.remove("done");
-        stepItems[current].classList.add("active");
+        stepClassList = stepItems[current].classList;
+        stepClassList.remove("done");
+        stepClassList.add("active");
         checkoutSections[current].classList.add("active");
     } else if (current === STEP_THREE) {
-        stepItems[current].classList.remove("active");
+        stepClassList.remove("active");
         checkoutSections[current].classList.remove("active");
         current = STEP_TWO;
-        stepItems[current].classList.remove("done");
-        stepItems[current].classList.add("active");
+        stepClassList = stepItems[current].classList;
+        stepClassList.remove("done");
+        stepClassList.add("active");
         checkoutSections[current].classList.add("active");
     }
 }
-
+function checkFinalNextButton() {
+  
+  if (current === STEP_THREE) {
+    nextButtons.forEach((btn) => {
+      btn.innerHTML = "確認訂單";
+    });
+  }else{
+      nextButtons.forEach((btn) => {
+        btn.innerHTML = `
+        下一步
+              <span>
+            <svg
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M16.6402 8.11673C16.8271 7.96109 17.1302 7.96109 17.3171 8.11673L22.3598 12.3158L22.416 12.3719C22.5467 12.53 22.5246 12.7488 22.3517 12.8861L17.3089 16.8899L17.2413 16.9347C17.0518 17.0386 16.7944 17.0181 16.6322 16.8765L16.5784 16.8202C16.4537 16.6624 16.4783 16.448 16.6483 16.313L20.8211 13H2.47619L2.39059 12.9919C2.16845 12.9496 2 12.7455 2 12.5C2 12.2239 2.2132 12 2.47619 12H20.6277L16.6402 8.68037L16.5848 8.62517C16.4556 8.46984 16.474 8.25508 16.6402 8.11673Z"
+                fill="white"
+              />
+            </svg>
+        `;
+      });
+  }
+}
 function checkPreButtonAble(){
     const isDisable =
       prevButtons[0].classList.contains("disable") &&
@@ -131,12 +160,15 @@ nextButtons.forEach(btn=>{
     btn.addEventListener('click',()=>{
         moveForward();
         checkPreButtonAble();
+        checkFinalNextButton();
     })
 })
 prevButtons.forEach(btn=>{
     btn.addEventListener('click',()=>{
         goBack();
         checkPreButtonAble();
+        checkFinalNextButton();
+        
     }
     );
 })

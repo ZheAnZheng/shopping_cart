@@ -37,6 +37,9 @@ footer{
         }
         a{
             color:var(--secondary-text-color);
+            &:first-of-type{
+                padding-top:1rem;
+            }
         }
         path{
             fill:var(--secondary-text-color);
