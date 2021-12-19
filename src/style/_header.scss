@@ -135,6 +135,7 @@ header {
       grid-template-rows: 60px;
       grid-template-columns: 1fr auto 1fr;
       grid-template-areas: "nav title icon";
+      background-color: var(--primary-bg-color);
       .title-wrapper {
         grid-area: title;
       }
@@ -145,6 +146,7 @@ header {
         opacity: 1;
         display: flex;
         column-gap: 1rem;
+        
         justify-content: flex-end;
       }
       nav {

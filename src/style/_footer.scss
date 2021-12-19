@@ -1,0 +1,42 @@
+footer{
+    display: none;
+    background: var(--footer-bg-color);
+    height: 284px;
+}
+
+@media (min-width:1000px){
+    footer{
+       display: block;
+       margin-top:124px;
+    }
+    
+    .footer-logo{
+        
+        flex: 1;
+        align-self: center;
+        max-width:180px ;
+        
+        object-fit: contain;
+        object-position: center;
+    }
+    .container{
+        width:80%;
+        height: 100%;
+        margin:0 auto;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    .footer-context{
+        padding-top:calc(284px / 4);
+        display: flex;
+        flex-direction: column;
+        a{
+            color:var(--secondary-text-color);
+        }
+        path{
+            fill:var(--secondary-text-color);
+            
+        }
+    }
+}

@@ -10,13 +10,14 @@
   align-items: center;
   column-gap: 0.5rem;
 }
-%input-style{
-      padding: 0 1rem;
-      width: 100%;
-      height: 40px;
-      border: 1px solid var(--secondary-text-color);
-      border-radius: 7px;
-    }
+%input-style {
+  padding: 0 1rem;
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--secondary-text-color);
+  border-radius: 7px;
+  -webkit-appearance: none;
+}
 main {
   display: flex;
   flex-direction: column;
@@ -100,10 +101,6 @@ main {
   display: inherit;
 }
 
-// input,
-// select {
-//   -webkit-appearance: none;
-// }
 @mixin setGrid($col_1, $col_2, $row_1, $row_2) {
   grid-column: #{$col_1} / #{$col_2};
   grid-row: #{$row_1} / #{$row_2};
@@ -135,18 +132,12 @@ main {
         //   transform:translateY(-25%);
       }
     }
-    
+
     input {
-     @extend %input-style;
-     -webkit--apearance:none;
-      &::-webkit-outer-spin-button,
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-      }
+      @extend %input-style;
     }
     select {
       @extend %input-style;
-      -webkit--apearance:none;
       background-color: transparent;
       &:invalid {
         color: var(--secondary-text-color);
@@ -180,56 +171,202 @@ main {
   }
 }
 //checkout section 2
-.checkout-deliver{
-    .form-group{
-        margin-bottom:24px ;
-        width: 100%;
-        border: 1px solid var(--input-border-mute);
-        border-radius: 7px;
-        display: flex;
-        align-items: center;
-        &:hover{
-            border: 1px solid var(--input-border-color);
-        }
+.checkout-deliver {
+  .form-group {
+    margin-bottom: 24px;
+    width: 100%;
+    border: 1px solid var(--input-border-mute);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    &:hover {
+      border: 1px solid var(--input-border-color);
     }
-    label{
-        width: 80%;
-        padding:.7rem;
+  }
+  label {
+    width: 80%;
+    padding: 0.7rem;
+  }
+  .checout_radio-text {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  [type="radio"] {
+    margin: 1rem;
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid var(--primary-text-color);
+    &:checked {
+      border: 1px solid var(--primary-text-color);
+      box-shadow: inset 0 0 0 5px var(--primary-text-color);
     }
-    .checout_radio-text{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-    [type="radio"]{
-        
-        margin: 1rem;
-        -webkit-appearance:none;
-        height: 20px;
-        width: 20px;
-        display: inline-block;
-        border-radius: 50%;
-        border: 1px solid var(--primary-text-color);
-        &:checked{
-            border:1px solid var(--primary-text-color);
-            box-shadow: inset 0 0 0 5px var(--primary-text-color);
-        }
-        
-
-        
-    }
-
+  }
 }
+//checkout section 3
+.checkout-card {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(3, 64px);
+
+  row-gap: 20px;
+  .form-group {
+    input {
+      @extend %input-style;
+    }
+    &:nth-of-type(1) {
+      @include setGrid(1, 13, 1, 2);
+    }
+    &:nth-of-type(2) {
+      @include setGrid(1, 13, 2, 3);
+    }
+    &:nth-of-type(3) {
+      @include setGrid(1, 6, 3, 4);
+    }
+    &:nth-of-type(4) {
+      @include setGrid(7, 13, 3, 4);
+    }
+  }
+}
+%product-img-style {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+}
+.shopping-bascket {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  height: 359px;
+  border: 1px solid var(--line-color);
+  border-radius: 7px;
+  background: var(--bascket-bg-color);
+
+  .bascket-title {
+    display: none;
+  }
+  .bascket-product {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    &:nth-last-child(3) {
+      border-bottom: 1px solid var(--line-color);
+    }
+  }
+
+  .bascket-product-img {
+    @extend %product-img-style;
+  }
+  .product-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+
+    .product-setting{
+        display: flex;
+        justify-content: flex-end;
+        
+        .count-btn{
+            position: relative;
+            display: inline-block;
+            
+            width:27px;
+            height:27px;
+            border-radius: 50%;
+            background: var(--line-color);
+            cursor: pointer;
+            &:nth-of-type(1){
+                margin-right: 1rem;
+            }
+            &:nth-of-type(3){
+                margin-left:1rem;
+            }
+            &:nth-of-type(1)::after{
+                position: absolute;
+                content:'-';
+                font-size: 1.5rem;
+                left: 50%;
+                top: 50%;
+                transform:translate(-45%,-60%);
+                
+                
+            }
+            &:nth-of-type(3)::after{
+                position: absolute;
+                content:'+';
+                font-size: 1.5rem;
+                left: 50%;
+                top: 50%;
+                transform:translate(-45%,-55%);
+
+                
+            }
+        }
+    }
+
+  }
+  .deliver {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line-color);
+  }
+  .product-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+  }
+}
+%button-style {
+  padding-top: 1.5rem;
+  margin: 2rem 0;
+
+  border-top: 1px solid var(--line-color);
+  height: 72px;
+  width: 100%;
+  .pre-button {
+    display: none;
+    height: 46px;
+    width: 100%;
+  }
+  .next-button {
+    height: 46px;
+    width: 100%;
+    background: var(--button-next-color);
+    border-radius: 10px;
+    color: #ffffff;
+    // border:1px solid black x;
+  }
+}
+
+.button-wrapper-1 {
+  @extend %button-style;
+  display: none;
+  margin: 1.4rem 0 0 0;
+  padding:unset;
+}
+
+.button-wrapper-2 {
+  @extend %button-style;
+  
+}
+
 
 
 @media (min-width: 450px) {
   main {
     width: 80%;
   }
-  .checkout-deliver{
-      label{
-          width: 90%;
-      }
+  .checkout-deliver {
+    label {
+      width: 90%;
+    }
   }
 }
 @mixin showStepText($num) {
@@ -253,7 +390,7 @@ main {
       width: 100%;
     }
     .shopping-bascket {
-      flex: 1 0 0;
+      flex: 0 0 40%;
       width: 100%;
     }
     .step-text {
@@ -271,6 +408,10 @@ main {
       }
     }
   }
+  .checkout {
+    height: 336px;
+    border-bottom: 1px solid var(--line-color);
+  }
   .checkout-wrapper {
     flex: 0 0 50%;
     width: 100%;
@@ -282,24 +423,72 @@ main {
 
   .checkout-info {
     grid-template-rows: repeat(3, 64px);
-    .form-group{
-        &:nth-of-type(3) {
-          @include setGrid(1, 7, 2, 3);
-        }
-        &:nth-of-type(4) {
-          @include setGrid(7, 13, 2, 3);
-        }
-        &:nth-of-type(5) {
-          @include setGrid(1, 5, 3, 4);
-        }
-        &:nth-of-type(6) {
-          @include setGrid(5, 13, 3, 4);
-        }
+    .form-group {
+      &:nth-of-type(3) {
+        @include setGrid(1, 7, 2, 3);
+      }
+      &:nth-of-type(4) {
+        @include setGrid(7, 13, 2, 3);
+      }
+      &:nth-of-type(5) {
+        @include setGrid(1, 5, 3, 4);
+      }
+      &:nth-of-type(6) {
+        @include setGrid(5, 13, 3, 4);
+      }
     }
   }
-  .checkout-deliver{
-    label{
-        width: 85%;
+
+  .checkout-deliver {
+    label {
+      width: 85%;
     }
   }
+  .checkout-card {
+    column-gap: 1rem;
+    .form-group {
+      &:nth-of-type(1) {
+        @include setGrid(1, 9, 1, 2);
+      }
+      &:nth-of-type(2) {
+        @include setGrid(1, 9, 2, 3);
+      }
+      &:nth-of-type(3) {
+        @include setGrid(1, 6, 3, 4);
+      }
+      &:nth-of-type(4) {
+        @include setGrid(7, 13, 3, 4);
+      }
+    }
+  }
+  .shopping-bascket {
+    height: 483px;
+    margin-top:3.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .bascket-title {
+      display: block;
+      margin-bottom: 16px;
+    }
+  }
+  .button-wrapper-1 {
+    display: block;
+    display: flex;
+    border: none;
+    justify-content: space-between;
+    align-items: center;
+    .pre-button{
+        display: block;
+        flex:0 0 30%;
+    }
+    .next-button{
+        flex:0 0 30%;
+    }
+  }
+  .button-wrapper-2{
+      display: none;
+  }
+
+
 }
