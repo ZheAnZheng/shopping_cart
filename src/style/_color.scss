@@ -10,6 +10,9 @@
     --step-mute-color:#afb1bd;
     --step-mute-bg:#FFFFFF;
     --line-color:#F0F0F5;
+    --radio-bg-color:#FFFFFF;
+    --radio-border-color:#2A2A2A;
+    --radio-color:#2A2A2A;
     --bascket-bg-color:#FFFFFF;
     --bascket-border-color:#F0F0F5;
     --bascket-button-color:#F0F0F5;
@@ -23,11 +26,9 @@
 [data-theme="dark"]{
     --primary-text-color:#FFFFFF;
     --primary-bg-color:#121212;
-    --secondary-text-color:#808080;
-    --button-next-color:#F67599;
     --button-pre-color:#ffffff;
-    --step-active-color:#FFFFFF;
-     --step-active-bg:#2a2a2a;
+    --radio-bg-color:#333333;
+    --radio-border-color:(255,255,255,0.4);
     --step-mute-bg:#2a2a2a;
     --step-mute-color:rgba(255,255,255,0.4);
     --line-color:rgba(255,255,255,.2);

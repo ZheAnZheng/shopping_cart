@@ -5,7 +5,20 @@
     }
   }
 }
-%flex-center {
+@mixin setGrid($col_1, $col_2, $row_1, $row_2) {
+  grid-column: #{$col_1} / #{$col_2};
+  grid-row: #{$row_1} / #{$row_2};
+}
+@mixin showStepText($num) {
+  .step-item {
+    @for $i from 1 through $num {
+      &:nth-child(#{$i}) .step-text {
+        display: block;
+      }
+    }
+  }
+}
+%flex-align-center {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
@@ -19,23 +32,29 @@
   border-radius: 7px;
   -webkit-appearance: none;
 }
-body{
+%product-img-style {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+}
+$mobile-width: 92%;
+$website-width: 80%;
+
+body {
   background: var(--primary-bg-color);
 }
 main {
   display: flex;
   flex-direction: column;
-  width: 92%;
+  width: $mobile-width;
   margin: 0 auto;
   padding-top: 60px;
-
-
-  
 }
 
 .step-wrapper {
-  margin-top: 24px;
   display: flex;
+  margin-top: 24px;
   justify-content: space-between;
 
   .step-text {
@@ -49,59 +68,54 @@ main {
     height: 32px;
     border-radius: 50%;
     border: 1px solid var(--step-mute-color);
-    color: var(--step-mute-color);
     background-color: var(--step-mute-bg);
+    color: var(--step-mute-color);
     &::after {
       position: absolute;
-
       top: 2px;
       left: 50%;
       transform: translateX(-50%);
-      
     }
-    
   }
 
   .step-item {
     @include getStep(3);
     flex: 1;
-
     position: relative;
-    &.active{
-      .step-circle{
-        color:var(--step-active-color);
-        background:var(--step-active-bg);
-        border-color:var(--primary-text-color);
+    &.active {
+      .step-circle {
+        color: var(--step-active-color);
+        background: var(--step-active-bg);
+        border-color: var(--primary-text-color);
       }
-      .step-text{
-        color:var(--primary-text-color);
+      .step-text {
+        color: var(--primary-text-color);
       }
-      .connect-line{
+      .connect-line {
         background: var(--primary-text-color);
       }
     }
-    &.done{
-       .step-text{
-        color:var(--primary-text-color);
+    &.done {
+      .step-text {
+        color: var(--primary-text-color);
       }
-      .step-circle{
-        color:var(--step-active-color);
-        background:var(--step-active-bg);
-        border-color:var(--step-mute-bg) ;
-        &::after{
-          content:'\2714'
+      .step-circle {
+        color: var(--step-active-color);
+        background: var(--step-active-bg);
+        border-color: var(--step-mute-bg);
+        &::after {
+          content: "\2713";
         }
       }
-       .connect-line{
+      .connect-line {
         background: var(--primary-text-color);
       }
-      
     }
     &:nth-of-type(1) {
-      @extend %flex-center;
+      @extend %flex-align-center;
     }
     &:nth-of-type(2) {
-      @extend %flex-center;
+      @extend %flex-align-center;
       justify-content: center;
       .connect-line {
         left: calc(-80% + 30px);
@@ -109,92 +123,47 @@ main {
       }
     }
     &:nth-of-type(3) {
-      @extend %flex-center;
+      @extend %flex-align-center;
       justify-content: flex-end;
-
       .connect-line {
         left: calc(-50% + 30px);
         right: calc(15% + 30px);
       }
     }
   }
-
   .connect-line {
     position: absolute;
-    // display: block;
     height: 2px;
     top: 16px;
-
     background-color: var(--step-mute-color);
   }
 }
-.checkout-wrapper{
-  
-  color:var(--primary-text-color)
-    
+.checkout-wrapper {
+  color: var(--primary-text-color);
 }
+
 //checkout section 1
 .checkout {
+  //預設3個checkout不顯示
   display: none;
-  &.active{
+
+  &.active {
     display: block;
   }
   h2 {
-    margin: 24px 0;
+    margin: 1.5rem 0;
   }
 }
 
-
-@mixin setGrid($col_1, $col_2, $row_1, $row_2) {
-  grid-column: #{$col_1} / #{$col_2};
-  grid-row: #{$row_1} / #{$row_2};
-}
-
+//寄送地址 form style
 .checkout-info {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(5, 64px);
-  column-gap: 2rem;
+  column-gap: 1rem;
   row-gap: 20px;
   .form-group {
-    .select-wrapper {
-      position: relative;
-      z-index: 0;
-      background-color: transparent;
-      &::after {
-        position: absolute;
-
-        z-index: -1;
-        right: 10px;
-        top: 45%;
-        bottom: 0;
-        content: "";
-        border-style: solid;
-        border-width: 6px 5px 5px 5px;
-        border-color: var(--secondary-text-color) transparent transparent
-          transparent;
-        //   transform:translateY(-25%);
-      }
-    }
-
-    input {
-      @extend %input-style;
-    }
-    select {
-      @extend %input-style;
-      background-color: transparent;
-      color: var(--primary-text-color);
-      &:invalid {
-        color: var(--secondary-text-color);
-      }
-    }
-    label {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 8px;
-      color: var(--secondary-text-color);
-    }
-
+    //setGrid(x1,x2,y1,y2);
     &:nth-of-type(1) {
       @include setGrid(1, 5, 1, 2);
     }
@@ -213,16 +182,48 @@ main {
     &:nth-of-type(6) {
       @include setGrid(1, 13, 5, 6);
     }
+    .select-wrapper {
+      position: relative;
+      z-index: 0;
+      background-color: transparent;
+      &::after {
+        position: absolute;
+        z-index: -1;
+        right: 10px;
+        top: 45%;
+        content: "";
+        border-style: solid;
+        border-width: 6px 5px 5px 5px;
+        border-color: var(--secondary-text-color) transparent transparent
+          transparent;
+      }
+    }
+
+    input {
+      @extend %input-style;
+    }
+    select {
+      @extend %input-style;
+      background-color: transparent;
+      color: var(--primary-text-color);
+      &:invalid {
+        color: var(--secondary-text-color);
+      }
+    }
+    label {
+      @extend %input-label-style;
+    }
   }
 }
 //checkout section 2
+//運送方式form style
 .checkout-deliver {
   .form-group {
+    display: flex;
     margin-bottom: 24px;
     width: 100%;
     border: 1px solid var(--input-border-mute);
     border-radius: 7px;
-    display: flex;
     align-items: center;
     &:hover {
       border: 1px solid var(--input-border-color);
@@ -231,37 +232,51 @@ main {
   label {
     width: 80%;
     padding: 0.7rem;
-  }
-  .checout_radio-text {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  [type="radio"] {
-    margin: 1rem;
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    display: inline-block;
-    border-radius: 50%;
-    border: 1px solid var(--primary-text-color);
-    &:checked {
-      border: 1px solid var(--primary-text-color);
-      box-shadow: inset 0 0 0 5px var(--primary-text-color);
+
+    .checout_radio-text {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
     }
   }
+
+  [type="radio"] {
+    display: inline-block;
+    margin: 1rem;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--radio-border-color);
+    background: var(--radio-bg-color);
+    -webkit-appearance: none;
+
+    &:checked {
+     
+      background:#FFF ;
+      box-shadow: inset 0 0 0 5px var(--radio-color);
+    }
+  }
+}
+%input-label-style {
+  display: block;
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary-text-color);
 }
 //checkout section 3
 .checkout-card {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(3, 64px);
-
   row-gap: 20px;
   .form-group {
     input {
       @extend %input-style;
     }
+    label {
+      @extend %input-label-style;
+    }
+
     &:nth-of-type(1) {
       @include setGrid(1, 13, 1, 2);
     }
@@ -275,12 +290,6 @@ main {
       @include setGrid(7, 13, 3, 4);
     }
   }
-}
-%product-img-style {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  object-position: center;
 }
 
 .shopping-bascket {
@@ -308,55 +317,52 @@ main {
   }
   .product-content {
     display: flex;
+    flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    flex-direction: column;
     width: 100%;
 
-    .product-setting{
-        display: flex;
-        justify-content: flex-end;
-        
-        .count-btn{
-            position: relative;
-            display: inline-block;
-            
-            width:27px;
-            height:27px;
-            border-radius: 50%;
-            background: var(--line-color);
-            cursor: pointer;
-            &:nth-of-type(1){
-                margin-right: 1rem;
-            }
-            &:nth-of-type(3){
-                margin-left:1rem;
-            }
-            &:nth-of-type(1)::after{
-                position: absolute;
-                content:'-';
-                font-size: 1.5rem;
-                left: 50%;
-                top: 50%;
-                transform:translate(-45%,-60%);
-                
-                
-            }
-            &:nth-of-type(3)::after{
-                position: absolute;
-                content:'+';
-                font-size: 1.5rem;
-                left: 50%;
-                top: 50%;
-                transform:translate(-45%,-55%);
+    .product-setting {
+      display: flex;
+      justify-content: flex-end;
 
-                
-            }
+      .count-btn {
+        position: relative;
+        display: inline-block;
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        background: var(--line-color);
+        cursor: pointer;
+        &:nth-of-type(1) {
+          margin-right: 1rem;
+
+          &::after {
+            position: absolute;
+            content: "-";
+            font-size: 1.5rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-45%, -60%);
+          }
         }
-    }
+        &:nth-of-type(3) {
+          margin-left: 1rem;
 
+          &::after {
+            position: absolute;
+            content: "+";
+            font-size: 1.5rem;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+          }
+        }
+      }
+    }
   }
-  .deliver {
+
+  .freight {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
@@ -369,92 +375,71 @@ main {
     margin: 1rem 0;
   }
 }
+
 %button-style {
   padding-top: 1.5rem;
   margin: 2rem 0;
-
-  border-top: 1px solid var(--line-color);
   height: 90px;
   width: 100%;
+  border-top: 1px solid var(--line-color);
+
   .pre-button {
-    
-    color:var(--primary-text-color);
+    color: var(--primary-text-color);
     height: 46px;
     width: 100%;
-    
-    path{
-      fill:var(--primary-text-color);
+    path {
+      fill: var(--primary-text-color);
     }
   }
-
   .next-button {
-    display: flex;
-    align-items: center;
+    @extend %flex-align-center;
     justify-content: center;
     height: 46px;
     width: 100%;
     background: var(--button-next-color);
     border-radius: 10px;
     color: #ffffff;
-    // border:1px solid black x;
   }
 }
-
+//website
 .button-wrapper-1 {
   @extend %button-style;
   display: none;
   margin: 1.4rem 0 0 0;
-  padding:unset;
-  .pre-button{
-    
-    &.disable{
-      
+  padding: unset;
+  .pre-button {
+    &.disable {
       visibility: hidden;
     }
   }
 }
 
+//mobile
 .button-wrapper-2 {
   @extend %button-style;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  .pre-button{
-    flex:3 0 72px;
+  .pre-button {
+    flex: 3 0 72px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    &.disable{
-      display:none;
+    &.disable {
+      display: none;
     }
   }
-  .next-button{
-    flex:1 0 30%;
+  .next-button {
+    flex: 1 0 30%;
   }
-  
 }
-
-
 
 @media (min-width: 450px) {
   main {
-    width: 80%;
-  }
-  .checkout-deliver {
-    label {
-      width: 90%;
-    }
+    width: $website-width;
   }
 }
-@mixin showStepText($num) {
-  .step-item {
-    @for $i from 1 through $num {
-      &:nth-child(#{$i}) .step-text {
-        display: block;
-      }
-    }
-  }
-}
+
 @media (min-width: 1000px) {
   main {
     display: flex;
@@ -492,7 +477,6 @@ main {
   .checkout-wrapper {
     flex: 0 0 50%;
     width: 100%;
-    
   }
   .shopping-bascket {
     flex: 0 0 40%;
@@ -501,6 +485,7 @@ main {
 
   .checkout-info {
     grid-template-rows: repeat(3, 64px);
+    column-gap: 2rem;
     .form-group {
       &:nth-of-type(3) {
         @include setGrid(1, 7, 2, 3);
@@ -519,13 +504,13 @@ main {
 
   .checkout-deliver {
     label {
-      width: 85%;
+      width: 90%;
     }
   }
   .checkout-card {
     column-gap: 1rem;
     .form-group {
-      color: var(--input-text-color);
+      
       &:nth-of-type(1) {
         @include setGrid(1, 9, 1, 2);
       }
@@ -541,11 +526,11 @@ main {
     }
   }
   .shopping-bascket {
-    height: 483px;
-    margin-top:3.3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 3.3rem;
+    height: 483px;
     color: var(--primary-text-color);
     .bascket-title {
       display: block;
@@ -553,29 +538,23 @@ main {
     }
   }
   .button-wrapper-1 {
-    display: block;
     display: flex;
-    border: none;
     justify-content: space-between;
     align-items: center;
-    
-    .pre-button{
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex:0 0 90px;
-        color: var(--primary-text-color);
-    }
-    .next-button{
-        flex:0 0 30%;
-        
-       
-    }
-  }
-  .button-wrapper-2{
-      display: none;
+    border: none;
+
+    .pre-button {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 0 0 90px;
       
+    }
+    .next-button {
+      flex: 0 0 30%;
+    }
   }
-
-
+  .button-wrapper-2 {
+    display: none;
+  }
 }

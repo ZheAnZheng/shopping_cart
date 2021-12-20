@@ -1,7 +1,7 @@
 footer{
     display: none;
-    background: var(--footer-bg-color);
     height: 284px;
+    background: var(--footer-bg-color);
 }
 
 @media (min-width:1000px){
@@ -11,21 +11,18 @@ footer{
     }
     
     .footer-logo{
-        
-        flex: 1;
         align-self: center;
         max-width:180px ;
         path{
             @include setLogoColor();
-        }
-            
+        }    
     }
     .container{
-        width:80%;
-        height: 100%;
-        margin:0 auto;
         display: flex;
         justify-content: space-between;
+        margin:0 auto;
+        width:80%;
+        height: 100%;
         
     }
     .footer-context{
