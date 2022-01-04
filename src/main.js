@@ -136,7 +136,7 @@ prevButtons.forEach((btn) => {
 document.addEventListener("DOMContentLoaded", () => {
   if (isDarkMode) {
     displayTheme("dark");
-    displayThemeIcon()
+    
   } else {
     displayTheme("light");
   }
