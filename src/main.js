@@ -1,5 +1,3 @@
-import "./index.scss";
-
 const moon = document.querySelector(".moon");
 const nextButtons=document.querySelectorAll('.next-button');
 const prevButtons=document.querySelectorAll('.pre-button')
