@@ -1,11 +1,11 @@
 import { sunIcon, moonIcon, rightArrowIcon } from "./script/constants.js";
-const moon = document.querySelector(".moon");
+const themeItem = document.querySelector(".themeToggle");
 const nextButtons = document.querySelectorAll(".next-button");
 const prevButtons = document.querySelectorAll(".pre-button");
 const stepItems = [...document.querySelectorAll(".step-item")];
 const checkoutSections = [...document.querySelectorAll(".checkout")];
 
-let isDarkMode = localStorage.getItem('theme')==='dark' ?true :false;
+let isDarkMode = localStorage.getItem("theme") === "dark" ? true : false;
 
 //狀態模式
 const STEP_ONE = 0;
@@ -71,15 +71,14 @@ function toggleTheme() {
   isDarkMode = !isDarkMode;
 
   if (isDarkMode) {
-    displayTheme('dark');
-    localStorage.setItem('theme','dark')
+    displayTheme("dark");
+    localStorage.setItem("theme", "dark");
   } else {
-    displayTheme('light');
+    displayTheme("light");
     localStorage.setItem("theme", "light");
   }
   displayThemeIcon();
 }
-
 
 //低階函示
 function updateClassNameBeforeNextStep(stepClass, checkouts) {
@@ -107,18 +106,16 @@ function updateClassNameAfterPreStep(stepClass, checkouts) {
 }
 function displayThemeIcon() {
   if (isDarkMode) {
-    moon.innerHTML = sunIcon;
+    themeItem.innerHTML = sunIcon;
   } else {
-    moon.innerHTML = moonIcon;
+    themeItem.innerHTML = moonIcon;
   }
 }
-function displayTheme(theme){
-    document.documentElement.setAttribute("data-theme", theme);
+function displayTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
 }
 
-
-
-moon.addEventListener("click", toggleTheme);
+themeItem.addEventListener("click", toggleTheme);
 nextButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     moveForward();
@@ -136,7 +133,6 @@ prevButtons.forEach((btn) => {
 document.addEventListener("DOMContentLoaded", () => {
   if (isDarkMode) {
     displayTheme("dark");
-    
   } else {
     displayTheme("light");
   }
