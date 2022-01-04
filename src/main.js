@@ -5,7 +5,8 @@ const prevButtons = document.querySelectorAll(".pre-button");
 const stepItems = [...document.querySelectorAll(".step-item")];
 const checkoutSections = [...document.querySelectorAll(".checkout")];
 
-let isDarkMode = false;
+let isDarkMode = localStorage.getItem('theme')==='dark' ?true :false;
+
 //狀態模式
 const STEP_ONE = 0;
 const STEP_TWO = 1;
@@ -26,7 +27,6 @@ function moveForward() {
     return;
   }
 }
-
 function goBack() {
   let currentStepClass = stepItems[current].classList;
   if (current === STEP_ONE) {
@@ -69,20 +69,15 @@ function checkPreButtonAble() {
 }
 function toggleTheme() {
   isDarkMode = !isDarkMode;
-  console.log(isDarkMode);
+
   if (isDarkMode) {
-    document.documentElement.setAttribute("data-theme", "dark");
+    displayTheme('dark');
+    localStorage.setItem('theme','dark')
   } else {
-    document.documentElement.setAttribute("data-theme", "light");
+    displayTheme('light');
+    localStorage.setItem("theme", "light");
   }
   displayThemeIcon();
-}
-function displayThemeIcon() {
-  if (isDarkMode) {
-    moon.innerHTML = sunIcon;
-  } else {
-    moon.innerHTML = moonIcon;
-  }
 }
 
 
@@ -110,6 +105,16 @@ function updateClassNameAfterPreStep(stepClass, checkouts) {
   stepClass.add("active");
   checkouts[current].classList.add("active");
 }
+function displayThemeIcon() {
+  if (isDarkMode) {
+    moon.innerHTML = sunIcon;
+  } else {
+    moon.innerHTML = moonIcon;
+  }
+}
+function displayTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+}
 
 
 
@@ -127,4 +132,13 @@ prevButtons.forEach((btn) => {
     checkPreButtonAble();
     checkFinalNextButton();
   });
+});
+document.addEventListener("DOMContentLoaded", () => {
+  if (isDarkMode) {
+    displayTheme("dark");
+    displayThemeIcon()
+  } else {
+    displayTheme("light");
+  }
+  displayThemeIcon();
 });
