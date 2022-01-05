@@ -14,31 +14,31 @@ const STEP_THREE = 2;
 let current = STEP_ONE;
 
 function moveForward() {
-  let currentStepClass = stepItems[current].classList;
   if (current === STEP_ONE) {
-    updateClassNameBeforeNextStep(currentStepClass, checkoutSections);
-    updateCurrentStepTo(STEP_TWO);
-    updateClassNameAfterNextStep(currentStepClass, checkoutSections);
+    current=STEP_TWO
+    updateClassNameBefore(STEP_ONE,true)
+    updateClassNameAfter(STEP_TWO)
+    
   } else if (current === STEP_TWO) {
-    updateClassNameBeforeNextStep(currentStepClass, checkoutSections);
-    updateCurrentStepTo(STEP_THREE);
-    updateClassNameAfterNextStep(currentStepClass, checkoutSections);
+    current = STEP_THREE;
+    updateClassNameBefore(STEP_TWO,true);
+    updateClassNameAfter(STEP_THREE);
   } else if (current === STEP_THREE) {
     return;
   }
 }
 function goBack() {
-  let currentStepClass = stepItems[current].classList;
+  
   if (current === STEP_ONE) {
     return;
   } else if (current === STEP_TWO) {
-    updateClassNameBeforePreStep(currentStepClass, checkoutSections);
-    updateCurrentStepTo(STEP_ONE);
-    updateClassNameAfterPreStep(currentStepClass, checkoutSections);
+    current=STEP_ONE
+    updateClassNameBefore(STEP_TWO);
+    updateClassNameAfter(STEP_ONE,true);
   } else if (current === STEP_THREE) {
-    updateClassNameBeforePreStep(currentStepClass, checkoutSections);
-    updateCurrentStepTo(STEP_TWO);
-    updateClassNameAfterPreStep(currentStepClass, checkoutSections);
+    current = STEP_TWO;
+    updateClassNameBefore(STEP_THREE);
+    updateClassNameAfter(STEP_TWO, true);
   }
 }
 function checkFinalNextButton() {
@@ -81,29 +81,21 @@ function toggleTheme() {
 }
 
 //低階函示
-function updateClassNameBeforeNextStep(stepClass, checkouts) {
-  stepClass.remove("active");
-  stepClass.add("done");
-  checkouts[current].classList.remove("active");
+
+function updateClassNameBefore(current,needAddDone){
+  let stepClass=stepItems[current].classList
+  stepClass.remove('active')
+  checkoutSections[current].classList.remove('active');
+  needAddDone && stepClass.add('done')
 }
-function updateCurrentStepTo(stepState) {
-  current = stepState;
+function updateClassNameAfter(current,needRemoveDone){
+  let stepClass=stepItems[current].classList
+  stepClass.add('active')
+  checkoutSections[current].classList.add('active');
+  needRemoveDone && stepClass.remove('done')
+
 }
-function updateClassNameAfterNextStep(stepClass, checkouts) {
-  stepClass = stepItems[current].classList;
-  checkouts[current].classList.add("active");
-  stepClass.add("active");
-}
-function updateClassNameBeforePreStep(stepClass, checkouts) {
-  stepClass.remove("active");
-  checkouts[current].classList.remove("active");
-}
-function updateClassNameAfterPreStep(stepClass, checkouts) {
-  stepClass = stepItems[current].classList;
-  stepClass.remove("done");
-  stepClass.add("active");
-  checkouts[current].classList.add("active");
-}
+
 function displayThemeIcon() {
   if (isDarkMode) {
     themeItem.innerHTML = sunIcon;
