@@ -7,39 +7,57 @@ const checkoutSections = [...document.querySelectorAll(".checkout")];
 
 let isDarkMode = localStorage.getItem("theme") === "dark" ? true : false;
 
-//狀態模式
 const STEP_ONE = 0;
 const STEP_TWO = 1;
 const STEP_THREE = 2;
-let current = STEP_ONE;
+
+class Page {
+  constructor(stepItem, section) {
+    this.stepItem = stepItem;
+    this.section = section;
+  }
+  show = function () {
+    this.stepItem.classList.add("active");
+    this.stepItem.classList.remove("done");
+    this.section.classList.add("active");
+  };
+  hide = function () {
+    this.stepItem.classList.remove("active");
+    this.stepItem.classList.remove("done");
+    this.section.classList.remove("active");
+  };
+  done = function () {
+    this.stepItem.classList.add("active");
+    this.stepItem.classList.add("done");
+    this.section.classList.remove("active");
+  };
+}
+
+const Step1 = new Page(stepItems[STEP_ONE], checkoutSections[STEP_ONE]);
+const Step2 = new Page(stepItems[STEP_TWO], checkoutSections[STEP_TWO]);
+const Step3 = new Page(stepItems[STEP_THREE], checkoutSections[STEP_THREE]);
+const Steps = [Step1, Step2, Step3];
+let current = 0;
 
 function moveForward() {
-  if (current === STEP_ONE) {
-    current=STEP_TWO
-    updateClassNameBefore(STEP_ONE,true)
-    updateClassNameAfter(STEP_TWO)
-    
-  } else if (current === STEP_TWO) {
-    current = STEP_THREE;
-    updateClassNameBefore(STEP_TWO,true);
-    updateClassNameAfter(STEP_THREE);
-  } else if (current === STEP_THREE) {
-    return;
-  }
+  if (current == Steps.length - 1) return;
+
+  const currentStep = Steps[current];
+  const nextStep = Steps[current + 1];
+  currentStep.done();
+  nextStep.show();
+
+  current++;
 }
 function goBack() {
-  
-  if (current === STEP_ONE) {
-    return;
-  } else if (current === STEP_TWO) {
-    current=STEP_ONE
-    updateClassNameBefore(STEP_TWO);
-    updateClassNameAfter(STEP_ONE,true);
-  } else if (current === STEP_THREE) {
-    current = STEP_TWO;
-    updateClassNameBefore(STEP_THREE);
-    updateClassNameAfter(STEP_TWO, true);
-  }
+  if (current == 0) return;
+
+  const currentStep = Steps[current];
+  const previousStep = Steps[current - 1];
+  currentStep.hide();
+  previousStep.show();
+
+  current--;
 }
 function checkFinalNextButton() {
   if (current === STEP_THREE) {
@@ -78,22 +96,6 @@ function toggleTheme() {
     localStorage.setItem("theme", "light");
   }
   displayThemeIcon();
-}
-
-//低階函示
-
-function updateClassNameBefore(current,needAddDone){
-  let stepClass=stepItems[current].classList
-  stepClass.remove('active')
-  checkoutSections[current].classList.remove('active');
-  needAddDone && stepClass.add('done')
-}
-function updateClassNameAfter(current,needRemoveDone){
-  let stepClass=stepItems[current].classList
-  stepClass.add('active')
-  checkoutSections[current].classList.add('active');
-  needRemoveDone && stepClass.remove('done')
-
 }
 
 function displayThemeIcon() {
