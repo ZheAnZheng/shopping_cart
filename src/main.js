@@ -1,43 +1,42 @@
-import { sunIcon, moonIcon, rightArrowIcon } from "./script/constants.js";
+import { sunIcon, moonIcon, rightArrowIcon } from "./script/Constants.js";
+import ProductsData from "./script/ProductsData.js";
+import { Page } from "./script/PageModule.js";
+
+import ProductManager from "./script/ProductManager.js";
+import BasketManager from "./script/BasketManager.js";
+import BasketFacade from "./script/BasketFacade.js";
+import BasketView from "./script/BasketView.js";
+import BasketController from "./script/BasketController.js";
+
 const themeItem = document.querySelector(".themeToggle");
 const nextButtons = document.querySelectorAll(".next-button");
 const prevButtons = document.querySelectorAll(".pre-button");
 const stepItems = [...document.querySelectorAll(".step-item")];
 const checkoutSections = [...document.querySelectorAll(".checkout")];
+const shoppingCartNode = document.querySelector(".shopping-basket");
+
+const prodcutManager = new ProductManager(ProductsData);
+const basketManager = new BasketManager({
+  0: 1,
+  1: 1,
+});
+const basketFacade = new BasketFacade(basketManager, prodcutManager);
+const basketView = new BasketView();
+const basketController = new BasketController(
+  shoppingCartNode,
+  basketFacade,
+  basketView
+);
 
 let isDarkMode = localStorage.getItem("theme") === "dark" ? true : false;
-
 const STEP_ONE = 0;
 const STEP_TWO = 1;
 const STEP_THREE = 2;
-
-class Page {
-  constructor(stepItem, section) {
-    this.stepItem = stepItem;
-    this.section = section;
-  }
-  show = function () {
-    this.stepItem.classList.add("active");
-    this.stepItem.classList.remove("done");
-    this.section.classList.add("active");
-  };
-  hide = function () {
-    this.stepItem.classList.remove("active");
-    this.stepItem.classList.remove("done");
-    this.section.classList.remove("active");
-  };
-  done = function () {
-    this.stepItem.classList.add("active");
-    this.stepItem.classList.add("done");
-    this.section.classList.remove("active");
-  };
-}
-
+let current = 0;
 const Step1 = new Page(stepItems[STEP_ONE], checkoutSections[STEP_ONE]);
 const Step2 = new Page(stepItems[STEP_TWO], checkoutSections[STEP_TWO]);
 const Step3 = new Page(stepItems[STEP_THREE], checkoutSections[STEP_THREE]);
 const Steps = [Step1, Step2, Step3];
-let current = 0;
 
 function moveForward() {
   if (current == Steps.length - 1) return;
@@ -97,7 +96,14 @@ function toggleTheme() {
   }
   displayThemeIcon();
 }
-
+function loadPreviousThemeSetting() {
+  if (isDarkMode) {
+    displayTheme("dark");
+  } else {
+    displayTheme("light");
+  }
+  displayThemeIcon();
+}
 function displayThemeIcon() {
   if (isDarkMode) {
     themeItem.innerHTML = sunIcon;
@@ -124,11 +130,17 @@ prevButtons.forEach((btn) => {
     checkFinalNextButton();
   });
 });
+
 document.addEventListener("DOMContentLoaded", () => {
-  if (isDarkMode) {
-    displayTheme("dark");
-  } else {
-    displayTheme("light");
-  }
-  displayThemeIcon();
+  loadPreviousThemeSetting();
+  basketController.initial();
+  shoppingCartNode.querySelectorAll(".basket-product").forEach((node) => {
+    const id = node.dataset.id;
+    node.querySelector(".addBtn").addEventListener("click", () => {
+      basketController.addProductAndUpdate(id);
+    });
+    node.querySelector(".removeBtn").addEventListener("click", () => {
+      basketController.removeProductAndUpdate(id);
+    });
+  });
 });
