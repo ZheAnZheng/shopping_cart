@@ -21,21 +21,31 @@ describe('ProductManager',()=>{
     productManager = new ProductManager(productData);
   })
   it('has a array for store products',()=>{
-    assert.equal(typeof (productManager.products), typeof Array.prototype);
+    const collection= productManager.products;
+    
+    assert(collection instanceof Array);
   })
   it('throw Error if argument of getProductById not a string ',()=>{
-    assert.throws(()=>productManager.getProductById(20), Error);
+    const id=20;
+    
+    assert.throws(() => productManager.getProductById(id), Error);
   })
   it("reutrn -1 if id of product is not exist when getProductById",()=>{
-    assert.equal(productManager.getProductById('-1'),-1)
+    const id = '-1';
+    const actual = productManager.getProductById(id);
+    const expect= -1;
+    assert.equal(actual, expect);
   })
   it('return product when getProductById',()=>{
-    assert.deepEqual(productManager.getProductById("0"), {
+    const id ='0'
+    const actual=productManager.getProductById(id);
+    const expect = {
       id: 0,
       image: "./public//broken_jean@2x.png",
       name: "破壞補丁修身牛仔褲",
       price: 3999,
-    });
+    };
+    assert.deepEqual(actual, expect);
   })
 })
 
@@ -48,22 +58,36 @@ describe('BasketManager',()=>{
     });
   })
   it('use Map for store id and count',()=>{
-    assert( basketManager.products instanceof Map);
+    const collection = basketManager.products;
+    assert(collection instanceof Map);
   })
   it("can get count of id ",()=>{
-    assert.equal(basketManager.getCountById("0"), 1);
+    const id='0'
+    const actual = basketManager.getCountById(id);
+    const expect = 1;
+    assert.equal(actual, expect);
   })
   it('can set count by id',()=>{
-    basketManager.setCountById("0", 10);
-    assert(basketManager.getCountById("0"),10);
+    const id='0';
+    basketManager.setCountById(id, 10);
+    const actual = basketManager.getCountById(id);
+    const expect=10
+    assert.equal(actual, expect)
   })
   it('can add product count by id ',()=>{
-    basketManager.addProductCountById("0");
-    assert.equal(basketManager.getCountById("0"), 2);
+    const id='0';
+    basketManager.addProductCountById(id);
+    const actaul=basketManager.getCountById(id)
+    const expect=2
+    assert.equal(actaul, expect);
   })
   it("can remove product count by id ",()=>{
-    basketManager.setCountById("0", 5).removeProductCountById("0");
-    assert.equal(basketManager.getCountById("0"), 4);
+    const id='0'
+    const newCount=5
+    basketManager.setCountById(id, newCount).removeProductCountById(id);
+    const actaul=basketManager.getCountById(id);
+    const expect=4;
+    assert.equal(actaul, expect);
   })
 })
 
@@ -82,25 +106,44 @@ describe('BasketFacade',()=>{
   })
   
     it('should return true if addProduct success',()=>{
-      assert(basketFacade.addProductById("0"));
+      
+      const productId = "0"
+      
+      const actual = basketFacade.addProductById(productId)
+      const expect=true;
+      assert.equal(actual, expect);
     })
     it("should return true if removeProduct success",()=>{
-      assert(basketFacade.removeProductById("0"));
+      const id= '0';
+      const actaul = basketFacade.removeProductById(id);
+      const expect=true;
+      assert.equal(actaul, expect);
     });
     it("should return false if addProduct fail", () => {
-      assert.equal(basketFacade.addProductById("-1"),false);
+      const id= '-1';
+      const actaul = basketFacade.addProductById(id);
+      const expect= false
+      assert.equal(actaul, expect);
     });
     it("should return false if removeProduct fail", () => {
-      assert.equal(basketFacade.removeProductById("-1"),false);
+      const id ='-1'
+      const actaul=basketFacade.removeProductById(id)
+      const expect=false
+      assert.equal(actaul, expect);
     });
     it('get Product total by id',()=>{
-      assert.equal(basketFacade.getProductTotalById('0'),3999);
+      const id='0';
+      const actual=basketFacade.getProductTotalById(id)
+      const expect=3999;
+      assert.equal(actual,expect);
     })
     it("get all product total", () => {
-      assert(
+      const actual =
         basketFacade.getAllProductsTotal() &&
-          typeof basketFacade.getAllProductsTotal() === "number"
-      );
+        typeof basketFacade.getAllProductsTotal(); 
+      const epxect = "number";
+
+      assert.equal(actual, epxect);
     });
     it('can get all Product detail',()=>{
       basketFacade.getAllProductDetail().forEach(product=>{
